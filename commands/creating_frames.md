@@ -17,3 +17,8 @@ imshow(imcrop(img,bbox));
 imshow(img-img(:,:,2)-img(:,:,3));
 img=img-img(:,:,2)-img(:,:,3);
 imshow(img(:,:,1));
+
+### Find lips
+Things might try:
+https://uea-teaching.github.io/audio-visual-2021/lectures/linear-filtering.html#/image-filters-as-templates-2
+https://uea-teaching.github.io/audio-visual-2021/lectures/non-linear-filtering.html#/dilation-example
