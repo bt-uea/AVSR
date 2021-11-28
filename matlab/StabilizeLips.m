@@ -1,3 +1,4 @@
+% StabilizeLips('mp4s/harry_WIN_20211127_11_22_07_Pro.mp4')
 function [newVid] = StabilizeLips(videoPath)
 
 v = VideoReader(videoPath);
@@ -62,9 +63,6 @@ newVid = struct('cdata',zeros(height,width,3,'uint8'),'colormap',[]);
 
 for i = 1:length(s)
     M1 = double(s(i).cdata);
-    R = M1(:,:,1);
-    G = M1(:,:,2);
-    B = M1(:,:,3);
 
     D = sqrt((M1(:,:,1) - cm(1)).^2 + (M1(:,:,2) - cm(2)).^2 + (M1(:,:,3) - cm(3)).^2);
 
