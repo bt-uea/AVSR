@@ -1,4 +1,4 @@
-function processframes(frameFileFilter)
+function processFrames(frameFileFilter)
 
     frameFiles = dir(frameFileFilter);
 
@@ -8,29 +8,12 @@ function processframes(frameFileFilter)
         mkdir(folderPath);
     end
 
-    faceDetector = vision.CascadeObjectDetector();
-
     for i = 1:numel(frameFiles)
         fileName = strcat(frameFiles(i).folder, '\', frameFiles(i).name);
         img = imread(fileName);
+        imgOut = ProcessFrame(img);       
         
-        bbox = step(faceDetector, img)
-        % sometimes multiple bounding boxes are returned. Last one in array
-        % appears to be the smallest one, bounding the face
-        bbox=bbox(size(bbox,1),:);
-        img = imcrop(img,bbox);
-        img = img-img(:,:,2)-img(:,:,3);
-        img=img-img(:,:,2)-img(:,:,3);
-        img = img(:,:,1);
-        
-        imgBinary = im2bw(img,0.15);
-        
-        imgDilated = DilateImage(imgBinary);
-        r = getBoundingRectofBiggestObject(imgDilated);
-        
-        img = imcrop(img,r);
-        
-        imwrite(img, strcat(folderPath, frameFiles(i).name));
+        imwrite(imgOut, strcat(folderPath, frameFiles(i).name));
     end
 
 end

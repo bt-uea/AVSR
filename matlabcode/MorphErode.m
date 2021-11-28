@@ -1,5 +1,5 @@
 % [1 3 5; 2 4 6; 7 8 10]
-function [outputImage] = MorphErode(imageSrc, filterKernel)
+function [outputImage] = MorphDilate(imageSrc, filterKernel)
     [rowsImg, colsImg] = size(imageSrc);
     
     [rowsFilter, colsFilter] = size(filterKernel);
@@ -45,7 +45,6 @@ function value = getValue(window, filterKernel)
     else
          mult = double(window).*filterKernel;
          value=all(mult,'all');
-         if (value>0); value = 1;else; value = 0; end
     end
    
 end
