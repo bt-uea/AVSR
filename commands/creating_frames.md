@@ -18,6 +18,8 @@ imshow(img-img(:,:,2)-img(:,:,3));
 img=img-img(:,:,2)-img(:,:,3);
 imshow(img(:,:,1));
 
+im2bw(img,0.15)
+
 ### Find lips
 Things might try:
 https://uea-teaching.github.io/audio-visual-2021/lectures/linear-filtering.html#/image-filters-as-templates-2
