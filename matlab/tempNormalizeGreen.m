@@ -9,9 +9,17 @@ B = doubleIm(:, :, 3);
 
 S = R + G + B;
 
-temp = G ./ S;
+im = R ./ S;
+im = im - (G./ S) * 3;
+im = im + (B./ S) * 3;
 
 % Increase range of temps for more granularity?
-imshow((temp .* 200) < 30);
+% im = (im .* 200) < 10;
+
+thresh = im > 0.8;
+
+imshow(im);
+
+% imshow(imclose(im > 0.8, strel('disk', 5)));
 
 end
