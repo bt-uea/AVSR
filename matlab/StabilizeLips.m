@@ -102,6 +102,11 @@ hf = figure;
 set(hf,'position',[150 150 width height]);
 movie(hf,newVid,1,v.FrameRate);
 
+v = VideoWriter("test.avi");
+open(v);
+writeVideo(v, newVid);
+close(v);
+
 % imshow(imclose(L, SE));
 
 % frameOfVid = imread("frames\red\alex_WIN_20211127_11_19_45_Pro_Moment.jpg");
