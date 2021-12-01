@@ -44,7 +44,7 @@ function value = getValue(window, filterKernel)
         value = 0;
     else
          mult = double(window).*filterKernel;
-         value=all(mult,'all');
+         value=any(mult,'all');
          if (value>0); value = 1;else; value = 0; end
     end
    
