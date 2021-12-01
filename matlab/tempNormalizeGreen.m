@@ -9,16 +9,16 @@ B = doubleIm(:, :, 3);
 
 S = R + G + B;
 
-im = R ./ S;
-im = im - (G./ S) * 3;
-im = im + (B./ S) * 3;
+im = (R ./ S);
+im = im - (G./ S) * 5;
+im = im + (B./ S) * 5;
 
 % Increase range of temps for more granularity?
 % im = (im .* 200) < 10;
 
 thresh = im > 0.8;
 
-imshow(im);
+imshow(thresh);
 
 % imshow(imclose(im > 0.8, strel('disk', 5)));
 
