@@ -11,7 +11,7 @@ function processFrames(frameFileFilter)
     for i = 1:numel(frameFiles)
         fileName = strcat(frameFiles(i).folder, '\', frameFiles(i).name);
         img = imread(fileName);
-        imgOut = ProcessFrame(img);       
+        imgOut = processFrame(img);       
         
         imwrite(imgOut, strcat(folderPath, frameFiles(i).name));
     end
