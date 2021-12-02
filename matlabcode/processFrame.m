@@ -29,7 +29,9 @@ function imgOut = processFrame(imgFrame)
     %r = getBoundingRectofBiggestObject(img);
     
     imgCropped = imcrop(imgDilated,r);
-    imgEdges = edge(imgCropped,'Canny', [0.4, 0.5], 6);
+    thresholds = [0.4, 0.5];
+    sigma = 6;
+    imgEdges = edge(imgCropped,'Canny',thresholds , sigma);
        
 
     %imgOut = imcrop(img,r);
