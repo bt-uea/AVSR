@@ -9,7 +9,7 @@ bbox = step(faceDetector, im);
 bbox=bbox(size(bbox,1),:);
 im = imcrop(im,bbox);
 
-doubleIm = im2double(im);
+doubleIm = imfilter(im2double(im), fspecial('average',20));
 
 % Done after some trial and error normalising RGB then doing mixing the 
 % color spaces for best representation of lips
@@ -23,19 +23,34 @@ im = (R ./ S) * 2;
 im = im - (G./ S) * 5;
 im = im + (B./ S) * 3;
 
-
+%{
 % This is used to find the average intensity of the lips then threshold for
 % that intensity (todo get an avg value and hardcode)
+P = roipoly(im);
+
+ptr = find(P);
 
 M1 = im;
 
-D = sqrt((M1(:,:,1) - 1.64335881458785).^2);
+R = M1(:,:,1);
+
+cm = mean(R(ptr));
+
+D = sqrt((M1(:,:,1) - cm(1)).^2);
 
 L = D < std(D(:));
 
+imshow(L);
+%}
+
+L = im > 0.8;
+
 % This will perform an dilation followed by erosion with a structuring
 % elemnt of a disk with radius 9
-closedBin = imclose(L, strel('disk', 15));
+closedBin = imclose(L, strel('disk', 4));
+% closedBin = L;
+
+imshow(closedBin)
 
 % Blur and then rethreshold to remove some rough edges (from
 % https://uk.mathworks.com/matlabcentral/answers/380687-how-to-smooth-rough-edges-along-a-binary-image)
@@ -53,7 +68,7 @@ BW = binaryImage;
        figure; 
        imshow(doubleIm); 
        hold on;
-       for k = 1:length(B),
+       for k = 1:length(B)
            boundary = B{k};
            if(k > N)
                plot(boundary(:,2), boundary(:,1), 'g', 'LineWidth', 2);
