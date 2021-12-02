@@ -13,20 +13,24 @@ function imgOut = processFrame(imgFrame)
     %% Do we need this line?
     %img= img-img(:,:,2)-img(:,:,3);
     %img = img(:,:,1);
-    imgGreen = tempNormalizeGreen(img,200, 50);
+    %imgGreen = tempNormalizeGreen2(img, 200, 50);
+    imgGreen = tempNormalizeGreen2(img);
+    imgRed = GetRed(img);
 
-    imgBinary = im2bw(img,0.15);
+    imgRed = im2bw(imgRed,0.3);
+    imgRebuilt = imgRed + imgGreen;
 
     % Frame 13, 57, 58 pick up noise on chin
-    imgDilated = DilateImage(imgBinary);
-    imgEroded = ErodeImage(imgDilated);
+    dilateKernel3 = [0 0 0; 1 1 1; 0 0 0;];
+    imgDilated = MorphDilate(imgRebuilt, dilateKernel3);
+    %imgEroded = ErodeImage(imgDilated);
 
-    r = getBoundingRectofBiggestObject(imgEroded);
+    r = getBoundingRectofBiggestObject(imgDilated);
     %r = getBoundingRectofBiggestObject(img);
     
-    imgCropped = imcrop(imgGreen);
-    imgEdges = edge(imgCropped,'Canny');
-    
+    imgCropped = imcrop(imgDilated,r);
+    imgEdges = edge(imgCropped,'Canny', [0.4, 0.5], 6);
+       
 
     %imgOut = imcrop(img,r);
     %imgOut = imcrop(imgBinary, r);
