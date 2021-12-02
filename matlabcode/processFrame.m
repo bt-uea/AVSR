@@ -29,6 +29,15 @@ function imgOut = processFrame(imgFrame)
     %r = getBoundingRectofBiggestObject(img);
     
     imgCropped = imcrop(imgDilated,r);
+    
+    
+    s=regionprops(imgCropped,'Centroid');
+    centroids = cat(1, s.Centroid)
+    % centroid now cotains x and y (in that order)
+    imageSize = size(imgCropped)
+    % imageSize now contains height and width (in that order)
+    
+
     thresholds = [0.4, 0.5];
     sigma = 6;
     imgEdges = edge(imgCropped,'Canny',thresholds , sigma);
