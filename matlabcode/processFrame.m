@@ -40,7 +40,7 @@ function imgOut = processFrame(imgFrame)
 
     thresholds = [0.4, 0.5];
     sigma = 6;
-    imgEdges = edge(imgCropped,'Canny',thresholds , sigma);
+    imgEdges = edge(imgCropped, 'Canny', thresholds, sigma);
        
 
     %imgOut = imcrop(img,r);
