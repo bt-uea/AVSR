@@ -40,5 +40,7 @@ vector = dct2(vector);
 
 vector = zigzag(vector);
 
+vector = vector(1:floor(length(vector)/2));
+
 end
 

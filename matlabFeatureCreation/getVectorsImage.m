@@ -1,7 +1,7 @@
 function [vector] = getVectorsImage(img)
 
 % TODO
-vector = [];
+vector = getLipsApplyDCT(img);
 
 end
 
