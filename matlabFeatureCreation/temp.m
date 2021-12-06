@@ -20,7 +20,7 @@ faceDetector = vision.CascadeObjectDetector();
 bbox = step(faceDetector, s(1).cdata);
 bbox=bbox(size(bbox,1),:);
 
-newVid = struct('cdata',zeros((halfFrameWidth * 2 + 1),(halfFrameHeight * 2 + 1),3,'uint8'),'colormap',[]);
+newVid = struct('cdata',zeros((halfFrameWidth * 2 + 1),(halfFrameHeight * 2 + 1),3,'uint8'),'colormap', []);
 
 [lipRoughX, lipRoughY] = getLipCentre(imcrop(s(1).cdata, bbox));
 lipRoughX = lipRoughX + bbox(2);
@@ -30,7 +30,8 @@ for frame = 1:length(s)
     % Assume face doesnt move that much after first frame to improve
     % performance
     data = s(frame).cdata;
-    newVid(frame).cdata = getLipsApplyDCT(data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :), halfFrameWidth, halfFrameHeight);
+    grayImage = getLipsApplyDCT(data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :), halfFrameWidth, halfFrameHeight);
+    newVid(frame).cdata = cat(3, grayImage, grayImage, grayImage);
     imwrite(newVid(frame).cdata, strcat('frames\red\', num2str(frame,'%03d'), '_test.png'));
 end
 
