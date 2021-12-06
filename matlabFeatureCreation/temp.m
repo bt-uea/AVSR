@@ -31,6 +31,7 @@ for frame = 1:length(s)
     % performance
     data = s(frame).cdata;
     newVid(frame).cdata = getLipsApplyDCT(data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :), halfFrameWidth, halfFrameHeight);
+    imwrite(newVid(frame).cdata, strcat('frames\red\', num2str(frame,'%03d'), '_test.png'));
 end
 
 hf = figure;
