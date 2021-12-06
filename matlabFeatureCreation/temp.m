@@ -22,10 +22,15 @@ bbox=bbox(size(bbox,1),:);
 
 newVid = struct('cdata',zeros((halfFrameWidth * 2 + 1),(halfFrameHeight * 2 + 1),3,'uint8'),'colormap',[]);
 
+[lipRoughX, lipRoughY] = getLipCentre(imcrop(s(1).cdata, bbox));
+lipRoughX = lipRoughX + bbox(2);
+lipRoughY = lipRoughY + bbox(1);
+
 for frame = 1:length(s)
     % Assume face doesnt move that much after first frame to improve
     % performance
-    newVid(frame).cdata = getLipsApplyDCT(imcrop(s(frame).cdata, bbox), halfFrameWidth, halfFrameHeight);
+    data = s(frame).cdata;
+    newVid(frame).cdata = getLipsApplyDCT(data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :), halfFrameWidth, halfFrameHeight);
 end
 
 hf = figure;
