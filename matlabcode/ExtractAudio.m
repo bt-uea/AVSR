@@ -11,9 +11,14 @@ function  ExtractAudio(mp4File)
     
 
     wavFile = strcat(filepath, name, '.wav');
+    
+    [y,fs] = audioread(mp4File);
 
-    [y,Fs] = audioread(mp4File);
-    audiowrite(wavFile, y, Fs);
+    fs_reduced = 16000;
+    [factor, divisor] = rat(fs_reduced/fs);
+    y_reduced = resample(y, factor, divisor);
+
+    audiowrite(wavFile, y_reduced, fs_reduced);
     
 end
 
