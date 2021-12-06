@@ -20,22 +20,10 @@ im = im + (B./ S) * 3;
 % Threshold img
 L = im > 0.8;
 
-% This will perform an dilation followed by erosion with a structuring
-% elemnt of a disk with radius 9
-closedBin = imclose(L, strel('disk', 4));
-% closedBin = L;
-
-% Blur and then rethreshold to remove some rough edges (from
-% https://uk.mathworks.com/matlabcentral/answers/380687-how-to-smooth-rough-edges-along-a-binary-image)
-windowSize = 10;
-kernel = ones(windowSize) / windowSize ^ 2;
-blurryImage = conv2(single(closedBin), kernel, 'same');
-binaryImage = blurryImage > 0.45; % Rethreshold
-
 % hold on;
 % imshow(binaryImage);
 
-BW = binaryImage;
+BW = L;
 [B,L,N,A] = bwboundaries(BW);
 
 [max_size, max_index] = max(cellfun('size', B, 1));
