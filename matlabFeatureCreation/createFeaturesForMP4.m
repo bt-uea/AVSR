@@ -56,14 +56,47 @@ for frame = 1:numAudioFrames-1
     elseif(mod(frameToUse, 3) == 0)
         % Get next frame for processing
         if(frameNumber <= length(s))
-            frameFeatures = s(frameNumber);
+            frameFeatures = getVectorsImage(s(frameNumber));
             frameNumber = frameNumber + 1;
         else
             disp("ERROR");
         end
     end
-    
+
     frameToUse = frameToUse + 1;
+
+    % Get audio features
+
+    % compute dft to transfer from time signal to frequency signal
+    % ft = fft(shortTimeFrame'.*window);
+    ft = fft(shortTimeFrame.*window);
+
+    % compute magnitude spectrum
+    magSpec = abs(ft);
+
+    % remove mirror after fft
+    nonMirrorMagSpec = magSpec(1:length(magSpec) / 2);
+
+    filterBank = applyMelTriangular(nonMirrorMagSpec, numChannels, audioFreq, length(magSpec));
+    % filterBank = applyMelRectangular(nonMirrorMagSpec, numChannels, fs, length(magSpec));
+    % filterBank = applyLinRectangular(nonMirrorMagSpec, numChannels);
+
+    % Log & DCT & truncate
+    logfb = log(filterBank);
+    mfcc = dct(logfb);
+
+    %truncate
+    % general rule is to truncate to half of coefficents
+    lenMFC= length(mfcc);
+    truncateSize = floor(lenMFC * (30 / numChannels));
+    %fprintf('Truncating from %d to %d vectors', lenMFC,truncateSize)
+    mfcc = mfcc(1:truncateSize);
+
+    % add Energy component for frame
+    mfcc(end + 1) = log(sum(mfcc.^2, 'all'));
+
+    % consider velocity acceleration vectors?
+    featureVectors = [featureVectors; mfcc];
 
     firstAudioSample = lastAudioSample - floor(numSamplesInAudioFrame * overlapPercent) + 1;
 end
