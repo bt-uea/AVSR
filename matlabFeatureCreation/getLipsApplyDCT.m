@@ -3,13 +3,6 @@ function [vector] = getLipsApplyDCT(img, halfFrameWidth, halfFrameHeight)
 % im = imread(file);
 im = img;
 
-% Find face in image as without jacket gives a large highlighted area as
-% well (thanks bruce)
-faceDetector = vision.CascadeObjectDetector();
-bbox = step(faceDetector, im);
-bbox=bbox(size(bbox,1),:);
-im = imcrop(im,bbox);
-
 doubleIm = imfilter(im2double(im), fspecial('average',20));
 
 % Done after some trial and error normalising RGB then doing mixing the 
@@ -58,7 +51,7 @@ outerBoundary = B{max_index};
 
 midPointX = round((maxValOutX + minValOutX) / 2);
 midPointY = round((maxValOutY + minValOutY) / 2);
-plot(midPointY, midPointX, 'g', 'Marker','+');
+% plot(midPointY, midPointX, 'g', 'Marker','+');
 
 % hold off;
 vector = doubleIm((midPointX - halfFrameWidth):(midPointX + halfFrameWidth), (midPointY - halfFrameHeight):(midPointY + halfFrameHeight), :);

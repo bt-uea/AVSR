@@ -14,10 +14,18 @@ s(k).cdata = readFrame(v);
 k = k+1;
 end
 
+% Find face in image as without jacket gives a large highlighted area as
+% well (thanks bruce)
+faceDetector = vision.CascadeObjectDetector();
+bbox = step(faceDetector, s(1).cdata);
+bbox=bbox(size(bbox,1),:);
+
 newVid = struct('cdata',zeros((halfFrameWidth * 2 + 1),(halfFrameHeight * 2 + 1),3,'uint8'),'colormap',[]);
 
 for frame = 1:length(s)
-    newVid(frame).cdata = getLipsApplyDCT(s(frame).cdata, halfFrameWidth, halfFrameHeight);
+    % Assume face doesnt move that much after first frame to improve
+    % performance
+    newVid(frame).cdata = getLipsApplyDCT(imcrop(s(frame).cdata, bbox), halfFrameWidth, halfFrameHeight);
 end
 
 hf = figure;
