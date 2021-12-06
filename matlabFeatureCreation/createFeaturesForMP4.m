@@ -39,8 +39,6 @@ frameToUse = 0;
 frameNumber = 1;
 
 for frame = 1:numAudioFrames-1
-    frame
-    numAudioFrames
     lastAudioSample = firstAudioSample + numSamplesInAudioFrame - 1;
 
     % Get audio frame
@@ -57,13 +55,14 @@ for frame = 1:numAudioFrames-1
         frameToUse = -1;
     elseif(mod(frameToUse, 3) == 0)
         % Get next frame for processing
-        if(frameNumber < length(s))
+        if(frameNumber <= length(s))
             frameFeatures = s(frameNumber);
-            frameNumber = frameNumber + 1
+            frameNumber = frameNumber + 1;
         else
             disp("ERROR");
         end
     end
+    
     frameToUse = frameToUse + 1;
 
     firstAudioSample = lastAudioSample - floor(numSamplesInAudioFrame * overlapPercent) + 1;
