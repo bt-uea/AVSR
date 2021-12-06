@@ -1,4 +1,4 @@
-function imgOut = processFrame(imgFrame)
+function [imgOut, centroids] = processFrame(imgFrame)
 
     faceDetector = vision.CascadeObjectDetector();
 
@@ -30,11 +30,15 @@ function imgOut = processFrame(imgFrame)
     
     imgCropped = imcrop(imgDilated,r);
     
+    centroids = GetCentroid(imgCropped);
+    % centroid now contains x and y (in that order)
+    x_c = centroids(:,1);
+    y_c = centroids(:,2);
+    imgCropped = ReplotImage(imgCropped,x_c,y_c);
+    %imshow(rotateAround(pf, centroids(:,2), centroids(:,1), 180));
+
     
-    s=regionprops(imgCropped,'Centroid');
-    centroids = cat(1, s.Centroid)
-    % centroid now cotains x and y (in that order)
-    imageSize = size(imgCropped)
+    imageSize = size(imgCropped);
     % imageSize now contains height and width (in that order)
     
 
@@ -49,6 +53,7 @@ function imgOut = processFrame(imgFrame)
     
     %imgOut = 
     imgOut = imgEdges;
+    %imgOut = imgCropped;
     %imgOut = ExtractNLargestBlobs(imgEdges, 2);
    
    
