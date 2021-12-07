@@ -28,7 +28,7 @@ bbox=bbox(size(bbox,1),:);
 lipRoughX = lipRoughX + bbox(2);
 lipRoughY = lipRoughY + bbox(1);
 
-featureVectors = [];
+featureVector = [];
 
 numAudioSamples=length(audio);
 
@@ -67,10 +67,10 @@ for frame = 1:numAudioFrames-1
     elseif(mod(frameToUse, 3) == 0)
         % Get next frame for processing
         if(frameNumber <= length(s))
-            data = s(frame).cdata;
+            data = s(frameNumber).cdata;
             data = data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :);
-            imshow(data);
-            frameFeatures = getVectorsImage(data)
+            % imshow(data);
+            frameFeatures = getVectorsImage(data);
             frameNumber = frameNumber + 1;
         else
             disp("ERROR");
@@ -107,10 +107,10 @@ for frame = 1:numAudioFrames-1
     mfcc = mfcc(1:truncateSize);
 
     % add Energy component for frame
-    mfcc(end + 1) = log(sum(mfcc.^2, 'all'))
+    mfcc(end + 1) = log(sum(mfcc.^2, 'all'));
 
     % consider velocity acceleration vectors?
-    featureVectors = [featureVectors; [mfcc, frameFeatures]];
+    featureVector = [featureVector; [mfcc, frameFeatures]];
 
     firstAudioSample = lastAudioSample - floor(numSamplesInAudioFrame * overlapPercent) + 1;
 end
