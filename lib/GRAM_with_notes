@@ -1,0 +1,5 @@
+$name = albi | alex | alexander | alejandro | aurelie | benjamin | brennan | felipe
+harry | hemal | hugo | max | nathaniel | owen | ruby | ruaridh | sarah | sophie | vav | yan | sil ;
+
+( <[sil] $name> [sil])
+The above indicate one or more of optional silence followed by name(due to <>), followed by silence
