@@ -1,5 +1,6 @@
 function [vector] = getLipsApplyDCT(img, halfFrameWidth, halfFrameHeight)
 
+% imshow(img);
 [midPointX, midPointY] = getLipCentre(img);
 
 croppedImg = img((midPointX - halfFrameWidth):(midPointX + halfFrameWidth), (midPointY - halfFrameHeight):(midPointY + halfFrameHeight), :);
@@ -23,9 +24,7 @@ L = image > 0.8;
 % This will perform an dilation followed by erosion with a structuring
 % elemnt of a disk with radius 9
 closedBin = imclose(L, strel('disk', 4));
-% closedBin = L;
-
-% imshow(closedBin)
+closedBin = L;
 
 % Blur and then rethreshold to remove some rough edges (from
 % https://uk.mathworks.com/matlabcentral/answers/380687-how-to-smooth-rough-edges-along-a-binary-image)
@@ -35,6 +34,11 @@ blurryImage = conv2(single(closedBin), kernel, 'same');
 binaryImage = blurryImage > 0.45; % Rethreshold
 
 vector = uint8(255 * binaryImage);
+% vector = uint8(255 * mat2gray(image));
+
+vector = imresize(vector, 0.1, 'nearest');
+
+% imshow(vector);
 
 vector = dct2(vector);
 

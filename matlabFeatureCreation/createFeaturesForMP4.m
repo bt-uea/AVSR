@@ -1,3 +1,4 @@
+% createFeatureVecFile('mp4s\*.mp4', 'MFCCs\');
 function [featureVector] = createFeaturesForMP4(filename, vectorSamplePeriod, numChannels, overlapPercent)
 
 halfFrameWidth = 100;
@@ -22,13 +23,15 @@ end
 % well (thanks bruce)
 faceDetector = vision.CascadeObjectDetector();
 bbox = step(faceDetector, s(1).cdata);
+bbox(1) = bbox(1) + 100;
+bbox(3) = bbox(3) - 200;
 bbox=bbox(size(bbox,1),:);
 
 [lipRoughX, lipRoughY] = getLipCentre(imcrop(s(1).cdata, bbox));
 lipRoughX = lipRoughX + bbox(2);
 lipRoughY = lipRoughY + bbox(1);
 
-featureVectors = [];
+featureVector = [];
 
 numAudioSamples=length(audio);
 
@@ -67,10 +70,10 @@ for frame = 1:numAudioFrames-1
     elseif(mod(frameToUse, 3) == 0)
         % Get next frame for processing
         if(frameNumber <= length(s))
-            data = s(frame).cdata;
-            data = data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :);
-            imshow(data);
-            frameFeatures = getVectorsImage(data)
+            data = s(frameNumber).cdata;
+            data = data((lipRoughX - 200):(lipRoughX + 200), (lipRoughY - 200):(lipRoughY + 200), :);
+            % imshow(data);
+            frameFeatures = getVectorsImage(data);
             frameNumber = frameNumber + 1;
         else
             disp("ERROR");
@@ -107,10 +110,10 @@ for frame = 1:numAudioFrames-1
     mfcc = mfcc(1:truncateSize);
 
     % add Energy component for frame
-    mfcc(end + 1) = log(sum(mfcc.^2, 'all'))
+    mfcc(end + 1) = log(sum(mfcc.^2, 'all'));
 
     % consider velocity acceleration vectors?
-    featureVectors = [featureVectors; [mfcc, frameFeatures]];
+    featureVector = [featureVector; [mfcc, frameFeatures]];
 
     firstAudioSample = lastAudioSample - floor(numSamplesInAudioFrame * overlapPercent) + 1;
 end
