@@ -1,5 +1,6 @@
 function [vector] = getLipsApplyDCT(img, halfFrameWidth, halfFrameHeight)
 
+% imshow(img);
 [midPointX, midPointY] = getLipCentre(img);
 
 croppedImg = img((midPointX - halfFrameWidth):(midPointX + halfFrameWidth), (midPointY - halfFrameHeight):(midPointY + halfFrameHeight), :);
