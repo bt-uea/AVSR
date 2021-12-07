@@ -18,14 +18,6 @@ MFCCs/train/sarah_WIN_20211127_11_23_35_Pro.mfc
 MFCCs/train/sophie_WIN_20211127_11_23_46_Pro.mfc
 MFCCs/train/vav_WIN_20211127_11_23_57_Pro.mfc
 MFCCs/train/yan_WIN_20211127_11_24_09_Pro.mfc
-MFCCs/train/nathaniel10.mfc
-MFCCs/train/owen10.mfc
-MFCCs/train/ruby10.mfc
-MFCCs/train/ruaridh10.mfc
-MFCCs/train/sarah10.mfc
-MFCCs/train/sophie10.mfc
-MFCCs/train/vav10.mfc
-MFCCs/train/yan10.mfc
 
 MFCCs/train/WIN_20211127_11_16_26_Pro.mfc
 MFCCs/train/WIN_20211127_11_17_00_Pro.mfc
