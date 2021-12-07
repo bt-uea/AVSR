@@ -1,4 +1,4 @@
-function imgs = GetImagesFromVideo(fileName)
+function imgs = GetImagesFromVideoFindLips(fileName)
 
     v = VideoReader(fileName);
     
@@ -9,12 +9,12 @@ function imgs = GetImagesFromVideo(fileName)
     
     while hasFrame(v)
         frame = readFrame(v);
-        img=im2bw(frame);
+        img = processFrame(frame);
 
         imgs(i,:,:) = img;    
         
         if mod(i,20) == 0 
-            fprintf('Processing frame %d/%d\n', i,numFrames);
+            fprintf('Processing frame %d/%d', i,numFrames);
         end
 
         i=i+1;
