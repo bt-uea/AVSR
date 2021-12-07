@@ -5,15 +5,20 @@ function featureVectors = CreateFeatureVectorsForFile(fileName)
     v = VideoReader(fileName);
     
     i=1;
-    imgs=[];
+    numFrames = v.NumFrames;
+    imgs=zeros(numFrames,360000);
+    
     
     while hasFrame(v)
         frame = readFrame(v);
         img = processFrame(frame);
 
         img_f = FlattenImage(img);
-        imgs = [imgs; img_f];    
+        imgs(i,:) = img_f;    
         
+        if mod(i,20) == 0 
+            fprintf('Processing frame %d/%d', i,numFrames);
+        end
 
         i=i+1;
     end
