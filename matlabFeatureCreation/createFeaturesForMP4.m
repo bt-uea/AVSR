@@ -1,5 +1,8 @@
 function [featureVector] = createFeaturesForMP4(filename, vectorSamplePeriod, numChannels, overlapPercent)
 
+halfFrameWidth = 100;
+halfFrameHeight = 150;
+
 [audio, audioFreq] = audioread(filename);
 audio = resample(audio, 16000, audioFreq);
 audioFreq = 16000;
@@ -15,7 +18,15 @@ while hasFrame(v)
     k = k+1;
 end
 
-vidFrameRate = v.FrameRate;
+% Find face in image as without jacket gives a large highlighted area as
+% well (thanks bruce)
+faceDetector = vision.CascadeObjectDetector();
+bbox = step(faceDetector, s(1).cdata);
+bbox=bbox(size(bbox,1),:);
+
+[lipRoughX, lipRoughY] = getLipCentre(imcrop(s(1).cdata, bbox));
+lipRoughX = lipRoughX + bbox(2);
+lipRoughY = lipRoughY + bbox(1);
 
 featureVectors = [];
 
@@ -56,7 +67,10 @@ for frame = 1:numAudioFrames-1
     elseif(mod(frameToUse, 3) == 0)
         % Get next frame for processing
         if(frameNumber <= length(s))
-            frameFeatures = getVectorsImage(s(frameNumber));
+            data = s(frame).cdata;
+            data = data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :);
+            imshow(data);
+            frameFeatures = getVectorsImage(data)
             frameNumber = frameNumber + 1;
         else
             disp("ERROR");
@@ -93,10 +107,10 @@ for frame = 1:numAudioFrames-1
     mfcc = mfcc(1:truncateSize);
 
     % add Energy component for frame
-    mfcc(end + 1) = log(sum(mfcc.^2, 'all'));
+    mfcc(end + 1) = log(sum(mfcc.^2, 'all'))
 
     % consider velocity acceleration vectors?
-    featureVectors = [featureVectors; mfcc];
+    featureVectors = [featureVectors; [mfcc, frameFeatures]];
 
     firstAudioSample = lastAudioSample - floor(numSamplesInAudioFrame * overlapPercent) + 1;
 end
