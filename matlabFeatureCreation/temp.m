@@ -18,9 +18,13 @@ end
 % well (thanks bruce)
 faceDetector = vision.CascadeObjectDetector();
 bbox = step(faceDetector, s(1).cdata);
+bbox(1) = bbox(1) + 100;
+bbox(3) = bbox(3) - 200;
 bbox=bbox(size(bbox,1),:);
 
 newVid = struct('cdata',zeros((halfFrameWidth * 2 + 1),(halfFrameHeight * 2 + 1),3,'uint8'),'colormap', []);
+
+imshow(imcrop(s(1).cdata, bbox));
 
 [lipRoughX, lipRoughY] = getLipCentre(imcrop(s(1).cdata, bbox));
 lipRoughX = lipRoughX + bbox(2);

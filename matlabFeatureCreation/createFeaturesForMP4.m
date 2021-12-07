@@ -1,3 +1,4 @@
+% createFeatureVecFile('mp4s\*.mp4', 'MFCCs\');
 function [featureVector] = createFeaturesForMP4(filename, vectorSamplePeriod, numChannels, overlapPercent)
 
 halfFrameWidth = 100;
@@ -22,6 +23,8 @@ end
 % well (thanks bruce)
 faceDetector = vision.CascadeObjectDetector();
 bbox = step(faceDetector, s(1).cdata);
+bbox(1) = bbox(1) + 100;
+bbox(3) = bbox(3) - 200;
 bbox=bbox(size(bbox,1),:);
 
 [lipRoughX, lipRoughY] = getLipCentre(imcrop(s(1).cdata, bbox));
