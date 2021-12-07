@@ -1,7 +1,10 @@
 function [vector] = getVectorsImage(img)
 
 % TODO
-vector = getLipsApplyDCT(img);
+
+halfFrameWidth = 100;
+halfFrameHeight = 150;
+vector = getLipsApplyDCT(img, halfFrameWidth, halfFrameHeight);
 
 end
 
