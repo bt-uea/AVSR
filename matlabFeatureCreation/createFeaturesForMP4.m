@@ -71,7 +71,7 @@ for frame = 1:numAudioFrames-1
         % Get next frame for processing
         if(frameNumber <= length(s))
             data = s(frameNumber).cdata;
-            data = data((lipRoughY - 200):(lipRoughY + 200), (lipRoughX - 200):(lipRoughX + 200), :);
+            data = data((lipRoughX - 200):(lipRoughX + 200), (lipRoughY - 200):(lipRoughY + 200), :);
             % imshow(data);
             frameFeatures = getVectorsImage(data);
             frameNumber = frameNumber + 1;
