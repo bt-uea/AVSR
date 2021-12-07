@@ -7,11 +7,13 @@ function flattenedImage = FlattenImage(img)
     
     [rows, cols] = size(img);
     
-      for r = 1: rows
-        out = [out,img(r,:)];
-      end
-      
-      flattenedImage = out;
+    out = reshape(img,[1,rows*cols]);
+    
+    %for r = 1: rows
+    %    out = [out,img(r,:)];
+    %end
+
+    flattenedImage = out;
       
 
 end

@@ -7,6 +7,7 @@ function imgOut = ReplotImage(imgIn, x_centroid, y_centroid)
     
     newDim = max(height, width);
     newDim = int16(newDim*1.2);
+    newDim=600;
     
     x_offset =  x_centroid - (width/2);
     % these are the oppostite way round because of the different coordinate
