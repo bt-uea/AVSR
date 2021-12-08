@@ -1,12 +1,12 @@
 function [combinedVectors] = getFVectors(vidFileName)
 
 % Get audio from file and downsample to 16kHz from mp4 64?
-[audio, audioFreq] = audioread(filename);
+[audio, audioFreq] = audioread(vidFileName);
 audio = resample(audio, 16000, audioFreq);
 audioFreq = 16000;
 
 % Read video and store each fram in s struct
-v = VideoReader(filename);
+v = VideoReader(vidFileName);
 vidHeight = v.Height;
 vidWidth = v.Width;
 s = struct('cdata',zeros(vidHeight,vidWidth,3,'uint8'),'colormap',[]);
@@ -29,16 +29,22 @@ numChannels = 40;
 % Get audio features
 % (audioFile, fs, vectorSamplePeriod, numChannels, overlapPercent)
 audioFs = getAudioFVectors(audio, audioFreq, vectorSamplePeriod, numChannels, overlapPercent);
+numAudioFs = length(audioFs)
 
 % Get Video features
 videoFs = getVideoFVectors(s);
 
 % Interp Combine and return vectors
-numAudioFs = length(audioFs);
-N = 3; % Will add 2 interpolated values between existing vals TODO calc number so vals match
-interpolatedAudioFs = interp1(videoFs, 1:1/N:numAudioFs);
+numVideoFs = length(videoFs)
+period = (numVideoFs / numAudioFs)
 
-combinedVectors = cat(2, audioFs, interpolatedAudioFs);
+% currentVec = 1:sampleTime:(sampleTime * numVideoFs)); - current spacing
+interpolatedVideoFs = interp1(videoFs, 1:  period : numVideoFs);
+interpVideo = length(interpolatedVideoFs)
+
+removeIfValsNotAdded = min([interpVideo, numAudioFs]);
+
+combinedVectors = cat(2, audioFs(1:removeIfValsNotAdded, :), interpolatedVideoFs(1:removeIfValsNotAdded, :));
 
 end
 
