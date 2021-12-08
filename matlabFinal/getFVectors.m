@@ -35,7 +35,8 @@ videoFs = getVideoFVectors(s);
 
 % Interp Combine and return vectors
 numAudioFs = length(audioFs);
-interpolatedAudioFs = interp1();
+N = 3; % Will add 2 interpolated values between existing vals TODO calc number so vals match
+interpolatedAudioFs = interp1(videoFs, 1:1/N:numAudioFs);
 
 combinedVectors = cat(2, audioFs, interpolatedAudioFs);
 
