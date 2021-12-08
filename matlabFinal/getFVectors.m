@@ -36,11 +36,11 @@ videoFs = getVideoFVectors(s);
 
 % Interp Combine and return vectors
 numVideoFs = length(videoFs)
-period = (numVideoFs / numAudioFs)
+period = (numVideoFs / numAudioFs);
 
 % currentVec = 1:sampleTime:(sampleTime * numVideoFs)); - current spacing
 interpolatedVideoFs = interp1(videoFs, 1:  period : numVideoFs);
-interpVideo = length(interpolatedVideoFs)
+interpVideo = length(interpolatedVideoFs);
 
 removeIfValsNotAdded = min([interpVideo, numAudioFs]);
 
