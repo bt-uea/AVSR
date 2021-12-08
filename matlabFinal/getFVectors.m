@@ -1,4 +1,4 @@
-function [combinedVectors] = getFVectors(vidFileName)
+function [combinedVectors] = getFVectors(vidFileName, vectorSamplePeriod, numChannels, overlapPercent)
 
 % Get audio from file and downsample to 16kHz from mp4 64?
 [audio, audioFreq] = audioread(vidFileName);
@@ -16,15 +16,6 @@ while hasFrame(v)
     s(k).cdata = readFrame(v);
     k = k+1;
 end
-
-% Need to measure frame every 10 - 50 ms
-% 0.02 secs = 20 ms
-vectorSamplePeriod = 0.02;
-
-% overlap percent is the % that a frame will overlap the next /
-% previous
-overlapPercent = 0.5;
-numChannels = 40;
 
 % Get audio features
 % (audioFile, fs, vectorSamplePeriod, numChannels, overlapPercent)
