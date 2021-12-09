@@ -48,6 +48,8 @@ binaryImage = blurryImage > 0.45; % Rethreshold
 
 binaryLipsCrop = binaryImage;
 
+innerBoundary = [];
+
 % Check if the main boundary has a child inside
 if(nnz(A(:,max_index)))
     for sub = find(A(:,max_index))
