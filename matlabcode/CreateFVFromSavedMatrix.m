@@ -19,8 +19,8 @@ function CreateFVFromSavedMatrix(fileName,numComponents)
         mkdir(filepathFeatures);
     end
 
-    %featureVectors = Create_FV_PCA(lipImages,numComponents);
-    featureVectors = Create_FV_DCT(lipImages,numComponents);
+    featureVectors = Create_FV_PCA(lipImages,numComponents);
+    %featureVectors = Create_FV_DCT(lipImages,numComponents);
     
 
     mfcFileName = strcat(filepathFeatures, name, '.mfc');
