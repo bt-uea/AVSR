@@ -24,7 +24,7 @@ L = image > 0.8;
 % This will perform an dilation followed by erosion with a structuring
 % elemnt of a disk with radius 9
 closedBin = imclose(L, strel('disk', 4));
-closedBin = L;
+% closedBin = L;
 
 % Blur and then rethreshold to remove some rough edges (from
 % https://uk.mathworks.com/matlabcentral/answers/380687-how-to-smooth-rough-edges-along-a-binary-image)
