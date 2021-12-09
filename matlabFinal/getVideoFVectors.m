@@ -20,7 +20,10 @@ videoVectors = [];
 for frame = 1:length(videoStruct)
     data = videoStruct(frame).cdata;
     data = data((lipRoughX - 200):(lipRoughX + 200), (lipRoughY - 200):(lipRoughY + 200), :);
-    tempVec = getLipsApplyDCT(data, halfFrameWidth, halfFrameHeight);
+    
+    [originalCrop, binaryLipsCrop, lipsOutline] = preProcessImage(data, halfFrameWidth, halfFrameHeight);
+
+    tempVec = getLipsApplyDCT(binaryLipsCrop, 0.1);
     videoVectors = [videoVectors; tempVec];
 end
 
