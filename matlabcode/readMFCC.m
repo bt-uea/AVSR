@@ -1,35 +1,23 @@
 % Saves the extracted feature vectors in a format ready for HTK processing
-function saveMFCC(mfcFileName, featureVectors, vectorSamplePeriod, parmKind, overlapPercent)
+function data = readMFCC(mfcFileName)
     % Open file for writing:
 
-    disp(['saving to ' mfcFileName])
-    fid = fopen(mfcFileName, 'w', 'ieee-be');
-    % Write the header information%
-    [numVectors, numDims] = size(featureVectors);
+    disp(['reading ' mfcFileName])
+    fid = fopen(mfcFileName, 'r', 'ieee-be');
 
-    vectorPeriod = vectorSamplePeriod * 1000000000 / 100;
-    % should be of order - 100000
-    
-
-    fwrite(fid, cast(numVectors, 'int32'), 'int32'); % number of vectors in file (4 byte int)
+    numVectors = fread(fid, 1, 'int32'); % number of vectors in file (4 byte int)
     % For overlapping frames vector period is half
     %fwrite(fid, cast(vectorPeriod * (1 - overlapPercent), 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
     % fwrite(fid, cast(vectorPeriod, 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
-    fwrite(fid, cast(vectorPeriod, 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
+    vectorPeriod = fread(fid, 1, 'int32'); % sample period in 100ns units (4 byte int)
     
-    fwrite(fid, cast(numDims * 4, 'int16'), 'int16'); % number of bytes per vector (2 byte int)
-    fwrite(fid, cast(parmKind, 'int16'), 'int16'); % code for the sample kind (2 byte int)
+    numDims = fread(fid, 1, 'int16')/4; % number of bytes per vector (2 byte int)
+    parmKind = fread(fid, 1, 'int16'); % code for the sample kind (2 byte int)
     % Write the data: one coefficient at a time:
-    for i = 1: numVectors
-        for j = 1:numDims
-            % getting -inf, NaN so replacing with zeros
-            value = featureVectors(i, j);
-            if ((value >= Inf) || (value <= -Inf)) || isnan(value)
-                value = 0;
-            end
-            fwrite(fid, value, 'float32');
-        end
-    end
+
+    
+    % If not compressed: Read floating point data
+    data = fread(fid, [numDims numVectors], 'float')';
 
     fclose(fid);
 

@@ -14,7 +14,7 @@ function imgs = GetImagesFromVideoFindLips(fileName)
         imgs(i,:,:) = img;    
         
         if mod(i,20) == 0 
-            fprintf('Processing frame %d/%d', i,numFrames);
+            fprintf('Processing frame %d/%d\n', i,numFrames);
         end
 
         i=i+1;

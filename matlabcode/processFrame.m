@@ -1,10 +1,17 @@
 function [imgOut, centroids] = processFrame(imgFrame)
 
     faceDetector = vision.CascadeObjectDetector();
+    faceDetector.MergeThreshold = 3;
 
     img = imgFrame;
 
     bbox = step(faceDetector, img);
+    if size(bbox,1) == 0
+        faceDetector.MergeThreshold = 2;
+         bbox = step(faceDetector, img);
+    end
+        
+        
     % sometimes multiple bounding boxes are returned. Last one in array
     % appears to be the smallest one, bounding the face
     bbox=bbox(size(bbox,1),:);
