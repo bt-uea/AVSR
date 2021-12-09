@@ -40,8 +40,10 @@ function DataPipeline(fileName)
     if ~exist(filepathFeatures, 'dir')
         mkdir(filepathFeatures);
     end
+    
+    logfv = log(featureVectors);
 
     mfcFileName = strcat(filepathFeatures, name, '.mfc');
-    saveMFCC(mfcFileName,featureVectors,0.0333333,9,0);
+    saveMFCC(mfcFileName,logfv,0.0333333,9,0);
    
 end
