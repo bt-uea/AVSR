@@ -22,4 +22,3 @@ MFCCs/train/yan_WIN_20211127_11_24_09_Pro.mfc
 MFCCs/train/WIN_20211127_11_16_26_Pro.mfc
 MFCCs/train/WIN_20211127_11_17_00_Pro.mfc
 MFCCs/train/WIN_20211127_11_17_31_Pro.mfc
-MFCCs/train/WIN_20211127_11_18_01_Pro.mfc

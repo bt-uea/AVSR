@@ -1,2 +1,2 @@
-MFCCs/train/WIN_20211127_11_18_32_Pro.mfc
 MFCCs/train/WIN_20211127_11_19_13_Pro.mfc
+MFCCs/train/WIN_20211127_11_18_01_Pro.mfc
