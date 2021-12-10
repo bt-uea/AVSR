@@ -14,6 +14,10 @@ function imgOut = ReplotImage(imgIn, x_centroid, y_centroid)
     % system
     y_offset = y_centroid - (height/2);
     
+    % inserted the lines below to investigate effect of stabilisation
+    %x_offset =  (width/2);
+    %y_offset = (height/2);
+    
 
     top_rows = int16(((newDim - height) /2) - y_offset);
     bottom_rows = newDim - top_rows - height;
