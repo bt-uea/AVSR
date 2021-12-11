@@ -9,14 +9,14 @@ function imgOut = ReplotImage(imgIn, x_centroid, y_centroid)
     newDim = int16(newDim*1.2);
     newDim=600;
     
+    % inserted the lines below to investigate effect of stabilisation
+    %x_centroid =  0;
+    %y_centroid = 0;
+    
     x_offset =  x_centroid - (width/2);
     % these are the oppostite way round because of the different coordinate
     % system
     y_offset = y_centroid - (height/2);
-    
-    % inserted the lines below to investigate effect of stabilisation
-    %x_offset =  (width/2);
-    %y_offset = (height/2);
     
 
     top_rows = int16(((newDim - height) /2) - y_offset);
