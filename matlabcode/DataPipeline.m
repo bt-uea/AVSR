@@ -30,7 +30,7 @@ function DataPipeline(fileName)
     %lipImages = GetImagesFromVideo(lipsVideoFileName);
     lipImages = imgs;
     lipImages=reshape(lipImages,numFrames,600*600);
-    featureVectors = GetPCA(lipImages);
+    featureVectors = GetPCA(lipImages,10);
 %### Feature Extraction
 %### Upscale
 %### Save Features 
