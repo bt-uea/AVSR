@@ -15,7 +15,10 @@ bbox=bbox(size(bbox,1),:);
 lipRoughX = lipRoughX + bbox(2);
 lipRoughY = lipRoughY + bbox(1);
 
+numPixels = (halfFrameWidth * 2 + 1) * (halfFrameHeight * 2 + 1) * 3;
+
 videoVectors = [];
+originalCropVec = zeros(length(videoStruct), numPixels);
 
 for frame = 1:length(videoStruct)
     data = videoStruct(frame).cdata;
@@ -23,9 +26,22 @@ for frame = 1:length(videoStruct)
     
     [originalCrop, binaryLipsCrop, lipsOutline] = preProcessImage(data, halfFrameWidth, halfFrameHeight);
 
-    tempVec = getLipsApplyDCT(binaryLipsCrop, 0.1, 93);
-    videoVectors = [videoVectors; tempVec];
+    shaped = double(reshape(originalCrop, 1, numPixels));
+
+    originalCropVec(frame, :) = shaped;
+
+    %tempVec = getLipsApplyDCT(binaryLipsCrop, 0.1, 93);
+    %videoVectors = [videoVectors; tempVec];
+    % disp("Loop " + frame);
 end
+
+disp("Doing PCA");
+
+im_m = mean(originalCropVec, 1);
+
+dif = originalCropVec-im_m;
+
+videoVectors = pca(dif, 'NumComponents', 10);
 
 end
 
