@@ -36,27 +36,12 @@ for k = 1:length(s)
     data = data((lipRoughX - 200):(lipRoughX + 200), (lipRoughY - 200):(lipRoughY + 200), :);
     [a, b, c] = preProcessImage(data, halfFrameWidth, halfFrameHeight);
     newVidCrop(k).cdata = a;
-    newB = uint8(255 * b);
+    newB = getLipsApplyDCT(b, 0.1, 93);
+    newB = uint8(255 .* newB);
     newVidBWCrop(k).cdata = cat(3, newB, newB, newB);
 end
 
-% DCT Image Then Reconstruct from DCT
-%{
-lipSize = size(newVidBWCrop(1).cdata);
-
-dcted = dct2(newVidBWCrop(1).cdata(:,:,1));
-
-zigzagged = zigzag(dcted);
-
-zigzagged(1500:length(zigzagged)) = 0;
-
-remadeDCT = izigzag(zigzagged, lipSize(1), lipSize(2));
-
-newIm = idct2(remadeDCT);
-imshow(newIm);
-%}
-
-pcaTesting(newVidCrop);
+% pcaTesting(newVidCrop);
 
 v = VideoWriter("a.avi");
 open(v);

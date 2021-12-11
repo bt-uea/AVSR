@@ -18,7 +18,7 @@ im_m = mean(resizedImage, 1);
 
 dif = resizedImage-im_m;
 
-imgP = pca(dif, 'NumComponents', 100);
+imgP = pca(dif, 'NumComponents', 10);
 
 imgB = dif * imgP;
 
