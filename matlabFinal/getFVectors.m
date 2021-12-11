@@ -27,6 +27,8 @@ videoFs = getVideoFVectors(s);
 
 % Interp Combine and return vectors
 numVideoFs = length(videoFs)
+%%% Message from Bruce, does this need to be
+%% numVideoFs = size(videoFs,1)
 period = (numVideoFs / numAudioFs);
 
 % currentVec = 1:sampleTime:(sampleTime * numVideoFs)); - current spacing
