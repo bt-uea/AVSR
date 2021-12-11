@@ -7,7 +7,7 @@ def main(numStates):
     if not os.path.isdir(dirName):
         os.mkdir(dirName)
 
-    for i in range(325, 326):
+    for i in range(10, 11):
         with open(dirName + "/proto{numStates:d}x{numVectors:d}States.txt".format(numStates=numStates, numVectors=i), 'w+') as file:
             file.write("<BeginHMM>\n")
             file.write("<NumStates> {numStates:d} <VecSize> {numVectors:d} <MFCC> <nullD> <diagC>\n".format(numStates=numStates, numVectors=i))

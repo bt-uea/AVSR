@@ -23,7 +23,7 @@ for frame = 1:length(videoStruct)
     
     [originalCrop, binaryLipsCrop, lipsOutline] = preProcessImage(data, halfFrameWidth, halfFrameHeight);
 
-    tempVec = getLipsApplyDCT(binaryLipsCrop, 0.1);
+    tempVec = getLipsApplyDCT(rgb2gray(originalCrop), 0.1, 93);
     videoVectors = [videoVectors; tempVec];
 end
 
