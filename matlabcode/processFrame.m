@@ -10,8 +10,8 @@ function [imgOut, centroids] = processFrame(imgFrame)
         faceDetector.MergeThreshold = 2;
          bbox = step(faceDetector, img);
     end
-        
-        
+
+
     % sometimes multiple bounding boxes are returned. Last one in array
     % appears to be the smallest one, bounding the face
     bbox=bbox(size(bbox,1),:);
@@ -34,9 +34,9 @@ function [imgOut, centroids] = processFrame(imgFrame)
 
     r = getBoundingRectofBiggestObject(imgDilated);
     %r = getBoundingRectofBiggestObject(img);
-    
+
     imgCropped = imcrop(imgDilated,r);
-    
+
     centroids = GetCentroid(imgCropped);
     % centroid now contains x and y (in that order)
     x_c = centroids(:,1);
@@ -44,26 +44,25 @@ function [imgOut, centroids] = processFrame(imgFrame)
     imgCropped = ReplotImage(imgCropped,x_c,y_c);
     %imshow(rotateAround(pf, centroids(:,2), centroids(:,1), 180));
 
-    
+
     imageSize = size(imgCropped);
     % imageSize now contains height and width (in that order)
-    
+
 
     thresholds = [0.4, 0.5];
     sigma = 6;
     imgEdges = edge(imgCropped, 'Canny', thresholds, sigma);
-       
+
 
     %imgOut = imcrop(img,r);
     %imgOut = imcrop(imgBinary, r);
     %imgOut = imcrop(img, r);
-    
-    %imgOut = 
+
+    %imgOut =
     imgOut = imgEdges;
     %imgOut = imgCropped;
     %imgOut = ExtractNLargestBlobs(imgEdges, 2);
-   
-   
+
+
 
 end
-
