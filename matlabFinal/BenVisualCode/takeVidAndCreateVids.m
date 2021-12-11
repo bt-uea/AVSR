@@ -40,6 +40,24 @@ for k = 1:length(s)
     newVidBWCrop(k).cdata = cat(3, newB, newB, newB);
 end
 
+% DCT Image Then Reconstruct from DCT
+%{
+lipSize = size(newVidBWCrop(1).cdata);
+
+dcted = dct2(newVidBWCrop(1).cdata(:,:,1));
+
+zigzagged = zigzag(dcted);
+
+zigzagged(1500:length(zigzagged)) = 0;
+
+remadeDCT = izigzag(zigzagged, lipSize(1), lipSize(2));
+
+newIm = idct2(remadeDCT);
+imshow(newIm);
+%}
+
+pcaTesting(newVidCrop);
+
 v = VideoWriter("a.avi");
 open(v);
 writeVideo(v, newVidCrop);

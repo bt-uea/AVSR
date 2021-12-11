@@ -35,7 +35,7 @@ interpVideo = length(interpolatedVideoFs);
 
 removeIfValsNotAdded = min([interpVideo, numAudioFs]);
 
-combinedVectors = cat(2, audioFs(1:removeIfValsNotAdded, :), interpolatedVideoFs(1:removeIfValsNotAdded, :));
-
+% combinedVectors = cat(2, audioFs(1:removeIfValsNotAdded, :), interpolatedVideoFs(1:removeIfValsNotAdded, :));
+combinedVectors = interpolatedVideoFs;
 end
 
