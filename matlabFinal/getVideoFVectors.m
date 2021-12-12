@@ -15,19 +15,20 @@ bbox=bbox(size(bbox,1),:);
 lipRoughX = lipRoughX + bbox(2);
 lipRoughY = lipRoughY + bbox(1);
 
+% PCA
+%{
 thresholds = [0.4, 0.5];
 sigma = 6;
 
-% PCA
 numPixels = (halfFrameWidth * 2 + 1) * (halfFrameHeight * 2 + 1);
+originalCropVec = zeros(length(videoStruct), numPixels);
+%}
 
 % Num DCT vectors to keep
 numDCT = 93;
 numShape = 3;
 
 videoVectors = zeros(length(videoStruct), numDCT + numShape);
-% Used for pca
-originalCropVec = zeros(length(videoStruct), numPixels);
 
 for frame = 1:length(videoStruct)
     data = videoStruct(frame).cdata;
@@ -36,9 +37,11 @@ for frame = 1:length(videoStruct)
     [originalCrop, binaryLipsCrop, lipsOutline] = preProcessImage(data, halfFrameWidth, halfFrameHeight);
 
     % Used when doing pca
+    %{
     shaped = double(reshape(edge(binaryLipsCrop, 'Canny', thresholds, sigma), 1, numPixels));
 
     originalCropVec(frame, :) = shaped;
+    %}
 
     videoVectors(frame, 1:numDCT) = getLipsApplyDCT(binaryLipsCrop, 0.1, numDCT);
     videoVectors(frame, numDCT + 1) = size(lipsOutline, 1);
@@ -48,9 +51,12 @@ for frame = 1:length(videoStruct)
     % disp("Loop " + frame);
 end
 
+% Use bruce's pca
+%{
 pcaVecs = GetPCA(originalCropVec, 20);
 
 videoVectors = cat(2, videoVectors, pcaVecs);
+%}
 
 %% Perform And Return PCA Vectors
 %{
