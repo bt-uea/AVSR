@@ -19,8 +19,9 @@ numPixels = (halfFrameWidth * 2 + 1) * (halfFrameHeight * 2 + 1) * 3;
 
 % Num DCT vectors to keep
 numDCT = 93;
+numShape = 3;
 
-videoVectors = zeros(length(videoStruct), numDCT);
+videoVectors = zeros(length(videoStruct), numDCT + numShape);
 % Used for pca
 % originalCropVec = zeros(length(videoStruct), numPixels);
 
@@ -35,7 +36,10 @@ for frame = 1:length(videoStruct)
 
     % originalCropVec(frame, :) = shaped;
 
-    videoVectors(frame, :) = getLipsApplyDCT(binaryLipsCrop, 0.1, numDCT);
+    videoVectors(frame, 1:numDCT) = getLipsApplyDCT(binaryLipsCrop, 0.1, numDCT);
+    videoVectors(frame, numDCT + 1) = size(lipsOutline, 1);
+    videoVectors(frame, numDCT + 2) = size(lipsOutline, 2);
+    videoVectors(frame, numDCT + 3) = sum(binaryLipsCrop, "all");
     % videoVectors = [videoVectors; tempVec];
     % disp("Loop " + frame);
 end
