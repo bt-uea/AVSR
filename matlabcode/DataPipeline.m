@@ -44,6 +44,6 @@ function DataPipeline(fileName)
     logfv = log(featureVectors);
 
     mfcFileName = strcat(filepathFeatures, name, '.mfc');
-    saveMFCC(mfcFileName,logfv,0.0333333,9,0);
+    MFCCsave(mfcFileName,logfv,0.0333333,9,0);
    
 end

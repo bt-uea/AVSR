@@ -1,6 +1,7 @@
-function [featureVectors] = getAudioFVectorsBT(audioFile, fs, vectorSamplePeriod, numChannels, overlapPercent)
+function [featureVectors] = getAudioFVectorsBT(audioFileName, vectorSamplePeriod, numChannels, overlapPercent)
 
-    y = audioFile;
+    
+    [y, fs]=audioread(audioFileName);
     
     % y = WienerScalart96(y, fs);
     
@@ -57,7 +58,7 @@ function [featureVectors] = getAudioFVectorsBT(audioFile, fs, vectorSamplePeriod
         mfcc = mfcc(1:truncateSize);
 
         % add Energy component for frame
-        mfcc(end + 1) = log(sum(mfcc.^2, 'all'));
+        %mfcc(end + 1) = log(sum(mfcc.^2, 'all'));
 
         % consider velocity acceleration vectors?
         featureVectors = [featureVectors; mfcc];

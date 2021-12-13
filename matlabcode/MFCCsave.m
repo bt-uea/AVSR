@@ -1,5 +1,5 @@
 % Saves the extracted feature vectors in a format ready for HTK processing
-function saveMFCC(mfcFileName, featureVectors, vectorSamplePeriod, parmKind, overlapPercent)
+function MFCCsave(mfcFileName, featureVectors, vectorSamplePeriod, parmKind, overlapPercent)
     % Open file for writing:
 
     disp(['saving to ' mfcFileName])
@@ -13,9 +13,9 @@ function saveMFCC(mfcFileName, featureVectors, vectorSamplePeriod, parmKind, ove
 
     fwrite(fid, cast(numVectors, 'int32'), 'int32'); % number of vectors in file (4 byte int)
     % For overlapping frames vector period is half
-    %fwrite(fid, cast(vectorPeriod * (1 - overlapPercent), 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
-    % fwrite(fid, cast(vectorPeriod, 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
-    fwrite(fid, cast(vectorPeriod, 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
+    fwrite(fid, cast(vectorPeriod * (1 - overlapPercent), 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
+    %fwrite(fid, cast(vectorPeriod, 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
+    %fwrite(fid, cast(vectorPeriod, 'int32'), 'int32'); % sample period in 100ns units (4 byte int)
     
     fwrite(fid, cast(numDims * 4, 'int16'), 'int16'); % number of bytes per vector (2 byte int)
     fwrite(fid, cast(parmKind, 'int16'), 'int16'); % code for the sample kind (2 byte int)
