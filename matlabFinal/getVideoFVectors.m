@@ -25,7 +25,7 @@ originalCropVec = zeros(length(videoStruct), numPixels);
 %}
 
 % Num DCT vectors to keep
-numDCT = 93;
+numDCT = 100;
 numShape = 0;
 
 videoVectors = zeros(length(videoStruct), numDCT + numShape);
