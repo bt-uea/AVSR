@@ -1,2 +1,4 @@
 MFCCs/train/WIN_20211127_11_19_13_Pro.mfc
 MFCCs/train/WIN_20211127_11_18_01_Pro.mfc
+MFCCs/train/WIN_20211127_11_17_00_Pro.mfc
+MFCCs/train/WIN_20211127_11_17_31_Pro.mfc
