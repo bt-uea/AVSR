@@ -26,7 +26,7 @@ originalCropVec = zeros(length(videoStruct), numPixels);
 
 % Num DCT vectors to keep
 numDCT = 93;
-numShape = 3;
+numShape = 0;
 
 videoVectors = zeros(length(videoStruct), numDCT + numShape);
 
@@ -44,9 +44,9 @@ for frame = 1:length(videoStruct)
     %}
 
     videoVectors(frame, 1:numDCT) = getLipsApplyDCT(binaryLipsCrop, 0.1, numDCT);
-    videoVectors(frame, numDCT + 1) = size(lipsOutline, 1);
-    videoVectors(frame, numDCT + 2) = size(lipsOutline, 2);
-    videoVectors(frame, numDCT + 3) = sum(binaryLipsCrop, "all");
+    % videoVectors(frame, numDCT + 1) = size(lipsOutline, 1);
+    % videoVectors(frame, numDCT + 2) = size(lipsOutline, 2);
+    % videoVectors(frame, numDCT + 3) = sum(binaryLipsCrop, "all");
     % videoVectors = [videoVectors; tempVec];
     % disp("Loop " + frame);
 end
