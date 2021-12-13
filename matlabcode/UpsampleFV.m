@@ -1,4 +1,6 @@
 function fv = UpsampleFV(videoFs, fps_from, fps_to)
+    
+    % reshape(videoFs,size(videoFs,1),size(videoFs,2)*size(videoFs,3)
     % for logical arrays - B&W images, do this
     % videoFs=cast(videoFs,'double');
     % Interp Combine and return vectors

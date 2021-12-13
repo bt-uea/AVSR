@@ -1,4 +1,4 @@
-function CreateFeatureVectorsForFolder(fileFilter, numComponents)
+function CreateFVFromSavedMatrixForFolder(fileFilter, numComponents)
    files = dir(fileFilter);
     
     for i = 1:numel(files)

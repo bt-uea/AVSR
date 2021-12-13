@@ -32,8 +32,8 @@ for i = 1:length(fvs)
     fileName1 = strcat('C:\Users\t64b4\Desktop\UEA\AV\AVSR\features\', fileName);
     fileName2 = strcat('C:\Users\t64b4\Desktop\UEA\AV\AVSR\features1\', fileName);
     
-    d=readMFCC(fileName1);
-    saveMFCC(fileName2,d,0.0333333,9,0);
-    %saveMFCC(fileName2,d,0.03,9,0);
+    d=MFCCread(fileName1);
+    MFCCsave(fileName2,d,0.0333333,9,0);
+    %MFCCsave(fileName2,d,0.03,9,0);
     
 end 

@@ -6,7 +6,7 @@
 function imgOut = GetPCA(imgs, numComponents)
 
     %remove pixels which are always zero
-    imgs( :, all(~imgs,1) ) = [];
+    %imgs( :, all(~imgs,1) ) = [];
 
     img_mu = mean(imgs, 1);
     
